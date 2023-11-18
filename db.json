@@ -2,7 +2,6 @@
   "medicamentos": [
     {
       "id": 1,
-      "imagePath": "./assets/remedio_padrao.jpg",
       "nome": "Novalgina",
       "hora": "12:00",
       "quant": "2",
@@ -10,27 +9,10 @@
     },
     {
       "id": 2,
-      "imagePath": "./assets/remedio_padrao.jpg",
       "nome": "Tylenol",
       "hora": "21:00",
       "quant": "1",
       "user_id": 2
-    },
-    {
-      "id": 3,
-      "imagePath": "./assets/remedio_padrao.jpg",
-      "nome": "Omeoprazol",
-      "hora": "15:35",
-      "quant": "1",
-      "user_id": 1
-    },
-    {
-      "imagePath": "./assets/remedio_padrao.jpg",
-      "nome": "cu",
-      "hora": "cu",
-      "quant": "cu",
-      "user_id": 1,
-      "id": 4
     }
   ],
   "usuarios": [

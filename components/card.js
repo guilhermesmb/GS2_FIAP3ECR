@@ -1,31 +1,33 @@
-import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function CardProduto({ produto }) {
-    
-    return (
-        <View style={styles.pedidos}>
+export default function CardProduto({ produto, onExcluirMedicamento }) {
+  return (
+    <View style={styles.pedidos}>
+      <View style={styles.cardProduto}>
 
-            <View style={styles.cardProduto}>
-                <Image style={styles.thumb} source={{ uri: produto.imagePath }} />
-
-                <View style={styles.produtoData}>
-                    <Text>{produto.nome}</Text>
-                    <Text style={styles.price}>{produto.hora}</Text>
-                </View>
-
-                <View>
-                    <Text>{produto.quant} Comprimidos</Text>    
-                </View>
-
-            </View>
-
+        <View style={styles.produtoData}>
+          <Text>{produto.nome}</Text>
+          <Text style={styles.price}>{produto.hora}</Text>
         </View>
-    )
+
+        <View>
+          <Text>{produto.quant} Comprimidos</Text>
+        </View>
+
+        <TouchableOpacity onPress={onExcluirMedicamento}>
+          <Text style={styles.lixeira}>🗑️</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
-
 const styles = StyleSheet.create({
-
+  lixeira: {
+    fontSize: 20,
+    color: 'red',
+  },
     box: {
         borderColor: '#121A2C',
         borderWidth: 1,

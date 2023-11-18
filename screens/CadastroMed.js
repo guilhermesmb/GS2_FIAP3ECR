@@ -9,7 +9,6 @@ import { AuthContext } from '../context/AuthContext.js';
 export default function CadastroMed({ navigation }) {
   const { user_id } = useContext(AuthContext);
   const [medicamento, setMedicamento] = useState({
-    imagePath: './assets/remedio_padrao.jpg',
     nome: '',
     hora: '',
     quant: '',
@@ -44,7 +43,7 @@ export default function CadastroMed({ navigation }) {
         onChangeText={(text) => setMedicamento({ ...medicamento, hora: text })}
       />
       <Input
-        placeholder='Dose'
+        placeholder='Dose Comprimidos'
         onChangeText={(text) => setMedicamento({ ...medicamento, quant: text })}
       />
 

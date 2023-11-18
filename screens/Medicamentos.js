@@ -1,39 +1,43 @@
+import React, { useContext, useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ScrollView, Text, View } from 'react-native';
-import CardProduto from '../components/card.js';
-import { StyleSheet } from 'react-native';
-import Button from '../components/button.js';
+import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import Button from '../components/button';
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext.js';
+import { AuthContext } from '../context/AuthContext';
+import CardProduto from '../components/card';
 
-// Função para buscar medicamentos
-const fetchMedicamentos = async (user_id, setProdutos) => {
-  try {
-    const response = await axios.get('http://localhost:3000/medicamentos');
-    const produtosFiltrados = response.data.filter((produto) => produto.user_id === user_id);
-    setProdutos(produtosFiltrados);
-  } catch (error) {
-    console.error('Erro ao buscar os dados:', error);
-  }
-};
-
-export default function Medicamentos({ navigation }) {
+const Medicamentos = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
   const { username, user_id } = useContext(AuthContext);
 
+  const fetchMedicamentos = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/medicamentos');
+      const produtosFiltrados = response.data.filter((produto) => produto.user_id === user_id);
+      setProdutos(produtosFiltrados);
+    } catch (error) {
+      console.error('Erro ao buscar os dados:', error);
+    }
+  };
+
+  const onExcluirMedicamento = async (medicamentoId) => {
+    try {
+      await axios.delete(`http://localhost:3000/medicamentos/${medicamentoId}`);
+      fetchMedicamentos();
+    } catch (error) {
+      console.error('Erro ao excluir medicamento:', error);
+    }
+  };
+
   useEffect(() => {
-    // Fetch dos medicamentos quando a tela estiver em foco
     const onFocus = () => {
-      fetchMedicamentos(user_id, setProdutos);
+      fetchMedicamentos();
     };
 
     const unsubscribeFocus = navigation.addListener('focus', onFocus);
 
-    // Fetch inicial dos medicamentos
-    fetchMedicamentos(user_id, setProdutos);
+    fetchMedicamentos();
 
-    // Cleanup ao desmontar o componente
     return () => {
       unsubscribeFocus();
     };
@@ -42,8 +46,9 @@ export default function Medicamentos({ navigation }) {
   return (
     <View style={styles.containerBetween}>
       <View style={styles.header}>
-        <MaterialIcons name="arrow-back" size={24} color="black" />
-
+      <TouchableOpacity>
+        <MaterialIcons onPress={() => navigation.navigate('Login')} name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
         <View style={styles.box}>
           <Text>Paciente :</Text>
           <Text style={styles.title}>{username}</Text>
@@ -54,14 +59,18 @@ export default function Medicamentos({ navigation }) {
 
       <ScrollView style={styles.scroll}>
         {produtos.map((produto) => (
-          <CardProduto key={produto.id} produto={produto} />
+          <CardProduto
+            key={produto.id}
+            produto={produto}
+            onExcluirMedicamento={() => onExcluirMedicamento(produto.id)}
+          />
         ))}
       </ScrollView>
 
       <Button onPress={() => navigation.navigate('CadastroMed')}>Cadastrar Medicamentos</Button>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -97,3 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default Medicamentos;
