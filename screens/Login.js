@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 27,
     textAlign: 'center',
     fontWeight: 'bold',
-    top: 6
+    top: 0
   },
 
 image: {

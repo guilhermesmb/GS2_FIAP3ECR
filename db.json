@@ -1,34 +1,49 @@
 {
   "medicamentos": [
-
-    { 
-    "imagePath": "https://drogariasp.vteximg.com.br/arquivos/ids/884127-1000-1000/172545---analgesico-novalgina-1g-10-comprimidos-1.jpg?v=638170963193470000g", 
-    "nome": "Novalgina", 
-    "hora": "12:00",
-    "quant": "2",
-    "user_id": 1
+    {
+      "id": 1,
+      "imagePath": "./assets/remedio_padrao.jpg",
+      "nome": "Novalgina",
+      "hora": "12:00",
+      "quant": "2",
+      "user_id": 1
     },
-
-    { 
-    "imagePath": "https://drogariaspacheco.vteximg.com.br/arquivos/ids/1021355-1000-1000/19119---tylenol-750mg-20-cp-1.jpg?v=638102736582600000", 
-    "nome": "Tylenol", 
-    "hora": "21:00",
-    "quant": "1",
-    "user_id": 2
-    } 
+    {
+      "id": 2,
+      "imagePath": "./assets/remedio_padrao.jpg",
+      "nome": "Tylenol",
+      "hora": "21:00",
+      "quant": "1",
+      "user_id": 2
+    },
+    {
+      "id": 3,
+      "imagePath": "./assets/remedio_padrao.jpg",
+      "nome": "Omeoprazol",
+      "hora": "15:35",
+      "quant": "1",
+      "user_id": 1
+    },
+    {
+      "imagePath": "./assets/remedio_padrao.jpg",
+      "nome": "cu",
+      "hora": "cu",
+      "quant": "cu",
+      "user_id": 1,
+      "id": 4
+    }
   ],
   "usuarios": [
     {
       "id": 1,
       "nome": "Guilherme Barbosa",
-      "email":"guilherme@gmail.com",
+      "email": "guilherme@gmail.com",
       "senha": "123"
     },
-
     {
       "id": 2,
       "nome": "Arthur Vieira",
-      "email":"arthur@gmail.com",
+      "email": "arthur@gmail.com",
       "senha": "123"
     }
   ]

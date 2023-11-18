@@ -13,14 +13,8 @@ export default function CardProduto({ produto }) {
                     <Text style={styles.price}>{produto.hora}</Text>
                 </View>
 
-                <View style={styles.spinner}>
-                    <TouchableOpacity >
-                        <Text style={styles.spinnerMinus}>-</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.spinnerValue}>0</Text>
-                    <TouchableOpacity >
-                        <Text style={styles.spinnerPlus}>+</Text>
-                    </TouchableOpacity>
+                <View>
+                    <Text>{produto.quant} Comprimidos</Text>    
                 </View>
 
             </View>

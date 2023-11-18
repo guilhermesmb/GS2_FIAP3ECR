@@ -1,6 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { ScrollView, Text, TextInput, View } from 'react-native';
-
+import { ScrollView, Text, View } from 'react-native';
 import CardProduto from '../components/card.js';
 import { StyleSheet } from 'react-native';
 import Button from '../components/button.js';
@@ -8,48 +7,68 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext.js';
 
-export default function Medicamentos() {
-  const [produtos, setProdutos] = useState([])
-  const {username} = useContext(AuthContext)
+// Função para buscar medicamentos
+const fetchMedicamentos = async (user_id, setProdutos) => {
+  try {
+    const response = await axios.get('http://localhost:3000/medicamentos');
+    const produtosFiltrados = response.data.filter((produto) => produto.user_id === user_id);
+    setProdutos(produtosFiltrados);
+  } catch (error) {
+    console.error('Erro ao buscar os dados:', error);
+  }
+};
+
+export default function Medicamentos({ navigation }) {
+  const [produtos, setProdutos] = useState([]);
+  const { username, user_id } = useContext(AuthContext);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/medicamentos")
-    .then(resp => setProdutos(resp.data))
-  }, [])
-    
-    return (
-        <View style={styles.containerBetween}>
-            <View style={styles.header}>
-                <MaterialIcons name="arrow-back" size={24} color="black" />
+    // Fetch dos medicamentos quando a tela estiver em foco
+    const onFocus = () => {
+      fetchMedicamentos(user_id, setProdutos);
+    };
 
-                <View style={styles.box}>
-                    <Text>Paciente :</Text>
-                    <Text style={styles.title}>{username}</Text>
-                </View>
-            </View>
+    const unsubscribeFocus = navigation.addListener('focus', onFocus);
 
-            <Text style={styles.subtitle}>Medicamentos</Text>
+    // Fetch inicial dos medicamentos
+    fetchMedicamentos(user_id, setProdutos);
 
-            <ScrollView style={styles.scroll}>
+    // Cleanup ao desmontar o componente
+    return () => {
+      unsubscribeFocus();
+    };
+  }, [user_id, navigation]);
 
-            { produtos.map(produto => 
-                      <CardProduto key={produto.id} produto={produto}/> )}
-               
-            </ScrollView>
+  return (
+    <View style={styles.containerBetween}>
+      <View style={styles.header}>
+        <MaterialIcons name="arrow-back" size={24} color="black" />
 
-            <Button>finalizar</Button>
-            
+        <View style={styles.box}>
+          <Text>Paciente :</Text>
+          <Text style={styles.title}>{username}</Text>
         </View>
+      </View>
 
-    )
+      <Text style={styles.subtitle}>Medicamentos</Text>
+
+      <ScrollView style={styles.scroll}>
+        {produtos.map((produto) => (
+          <CardProduto key={produto.id} produto={produto} />
+        ))}
+      </ScrollView>
+
+      <Button onPress={() => navigation.navigate('CadastroMed')}>Cadastrar Medicamentos</Button>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  header:{
+  header: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 20
+    margin: 20,
   },
   containerBetween: {
     flex: 1,
@@ -58,80 +77,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 20,
   },
-box: {
+  box: {
     borderColor: '#121A2C',
     borderWidth: 1,
     borderRadius: 4,
     padding: 8,
   },
-  pedidos: {
-    width: '100%',
+  subtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
-  pedidoData:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  pedidoDataTotal: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderTopWidth: 1,
-  },
-  cardProduto: {
-    borderColor: '#121A2C55',
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: 10,
-    marginVertical: 5,
-  },
-  produtoData: {
-    flex: 1,
-    alignSelf: 'flex-start',
-  },  
-  thumb: {
-    width: 50,
-    height: 50,
-    borderRadius: 4,
-  },
-  price: {
-    color: '#29A035',
+  title: {
     fontSize: 18,
-  },
-  spinner: {
-    flexDirection: 'row',
-    backgroundColor: '#D9D9D9',
-    borderRadius: 999,
-  },
-  spinnerMinus: {
-    textAlign: 'center',
-    backgroundColor: '#E9E9E9',
-    borderRadius: 999,
-    width: 24,
-    height: 24,
-    lineHeight: 24,
     fontWeight: 'bold',
-  },
-  spinnerPlus: {
-    textAlign: 'center',
-    backgroundColor: '#121A2C',
-    borderRadius: 999,
-    width: 24,
-    height: 24,
-    fontWeight: 'bold',
-    lineHeight: 24,
-    color: '#FFF',
-  },
-  spinnerValue: {
-    textAlign: 'center',
-    width: 24,
-    height: 24,
-    lineHeight: 24,
   },
   scroll: {
-   width: '100%',
-  }
+    width: '100%',
+  },
+});
 
-})

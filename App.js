@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import Cadastro from './screens/Cadastro'
+import CadastroMed from './screens/CadastroMed'
 import Medicamentos from "./screens/Medicamentos";
 import { AuthProvider } from './context/AuthContext';
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Medicamentos" component={Medicamentos} />
+        <Stack.Screen name="CadastroMed" component={CadastroMed} />
       </Stack.Navigator>
       </AuthProvider>
     </NavigationContainer>
