@@ -5,20 +5,15 @@ import CardProduto from '../components/card.js';
 import { StyleSheet } from 'react-native';
 import Button from '../components/button.js';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../context/AuthContext.js';
 
-const produto = {
-    "id": 1,
-    "nome": "Bolo de Chocolate",
-    "imagePath": "https://img.freepik.com/free-photo/close-up-fancy-dessert_23-2150527565.jpg?t=st=1688655003~exp=1688658603~hmac=84829cbb20876216de8d7e408378e6b1c44686855c3d414865b445e20bb5f7b4&w=1380",
-    "preco": 8
-}
-
-export default function Produtos() {
+export default function Medicamentos() {
   const [produtos, setProdutos] = useState([])
+  const {username} = useContext(AuthContext)
 
   useEffect(() => {
-    axios.get("http://localhost:3000/produtos")
+    axios.get("http://localhost:3000/medicamentos")
     .then(resp => setProdutos(resp.data))
   }, [])
     
@@ -28,30 +23,12 @@ export default function Produtos() {
                 <MaterialIcons name="arrow-back" size={24} color="black" />
 
                 <View style={styles.box}>
-                    <Text>comanda</Text>
-                    <Text style={styles.title}>2457</Text>
+                    <Text>Paciente :</Text>
+                    <Text style={styles.title}>{username}</Text>
                 </View>
             </View>
 
-            <View style={styles.pedidos}>
-                <Text style={styles.subtitle}>Pedido</Text>
-                <View style={styles.pedidoData}>
-                    <Text>Saldo da comanda</Text>
-                    <Text>R$ 0,00</Text>
-                </View>
-                <View style={styles.pedidoData}>
-                    <Text>Total do pedido</Text>
-                    <Text>R$ +20,00</Text>
-                </View>
-                <View style={styles.pedidoDataTotal}>
-                    <Text>Saldo final</Text>
-                    <Text>R$ 149,00</Text>
-                </View>
-            </View>
-
-            <TextInput style={styles.input} placeholder="procurar" />
-
-            <Text style={styles.subtitle}>Produtos</Text>
+            <Text style={styles.subtitle}>Medicamentos</Text>
 
             <ScrollView style={styles.scroll}>
 

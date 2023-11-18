@@ -13,7 +13,7 @@ export default function Login({ navigation }) {
 
   async function handleLogin(){
   if (await login({email, senha})){
-    navigation.navigate("Comanda")
+    navigation.navigate("Medicamentos")
   }else{
     setErro("Usuário ou Senha Inválidos")
   }
@@ -22,14 +22,13 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/home.jpg')}/>
-      <Text>.</Text>
-      <Text style={styles.title}>Auxílio de compras</Text>
+      <Text style={styles.title}>Cuidados Médicos Preventivos</Text>
       
       <Input placeholder='E-mail' value={email} onChangeText={setEmail}/>
       <Input placeholder='Senha' value={senha} onChangeText={setSenha} secureTextEntry/>
 
       <Button onPress={handleLogin}>Entrar</Button>
-      <Button onPress={() => navigation.navigate('Cadastro')}>Cadastrar Funcionário</Button>
+      <Button onPress={() => navigation.navigate('Cadastro')}>Cadastrar Paciente</Button>
 
       <Text>{erro}</Text>
       
@@ -48,8 +47,10 @@ const styles = StyleSheet.create({
 
   title: {
     color: '#121A2C',
-    fontSize: 34,
+    fontSize: 27,
+    textAlign: 'center',
     fontWeight: 'bold',
+    top: 6
   },
 
 image: {

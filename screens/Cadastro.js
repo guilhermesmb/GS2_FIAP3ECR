@@ -7,8 +7,7 @@ export default function Cadastro() {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/cadastro.jpg')}/>
-      <Text>.</Text>
-      <Text style={styles.title}>Cadastro de Funcionários</Text>
+      <Text style={styles.title}>Cadastro de Pacientes</Text>
       
       <Input placeholder='E-mail'/>
       <Input placeholder='Senha' secureTextEntry/>

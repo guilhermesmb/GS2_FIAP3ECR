@@ -10,7 +10,7 @@ export default function CardProduto({ produto }) {
 
                 <View style={styles.produtoData}>
                     <Text>{produto.nome}</Text>
-                    <Text style={styles.price}>R$ {produto.preco.toFixed(2)}</Text>
+                    <Text style={styles.price}>{produto.hora}</Text>
                 </View>
 
                 <View style={styles.spinner}>
